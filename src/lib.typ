@@ -389,10 +389,13 @@
     set align(center + horizon)
     pagebreak(to: "odd")
 
+    let sec-nb = counter(heading).get().at(0)
+    let fmt-nb = numbering("I", sec-nb)
+
     text(
       size: font-size.part-supplement,
       font: font.decorated,
-      smallcaps[#it.supplement #it.numbering],
+      smallcaps[#it.supplement #fmt-nb],
     )
     v(0.5cm)
     text(smallcaps(it.body), font: font.title, size: font-size.part-title)
