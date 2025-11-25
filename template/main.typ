@@ -1,5 +1,4 @@
-
-#import "@local/unirennes-manuscript:0.2.0": *
+#import "@local/unirennes-manuscript:0.3.0": styles, cover, insciption, part
 
 #let info = (
   // Author information
@@ -33,17 +32,10 @@
       ("Prénom NOM", "Fonction et établissement d’exercice"),
     ), // Co-encadrant.e.s de thèse (dans le cas d'une CIFRE par exemple), peut être vide
   ),
-  // TODO: put this outside the template initialization
-  acknowledgements: [
-    Je tiens à remercier
-    I would like to thank. my parents..
-    J’adresse également toute ma reconnaissance à ... .
-  ],
   // Thesis defense information
   defense-place: [« Lieu »],
   defense-date: [« date »],
   thesis-number: [« If required »], // Otherwise, remove this line
-  no-cover: false, // If true, does not add doctoral school pages
   // french info
   title-fr: [« Titre de la thèse »],
   keywords-fr: [de 3 à 6 mots clefs],
@@ -53,27 +45,35 @@
   keywords-en: [3 to 6 keywords],
   abstract-en: lorem(150),
 )
-#show: matisse-thesis.with(..info)
+#show: styles.matisse-thesis.with(author: info.author, title: info.title-en)
 
 // Print the matisse cover
-#cover(..info)
+#cover.front(..info)
 
 // Print the aknowledgements, list of figures, ...
-#preamble(
-  inscription: [To twotwo you Too],
-  acknowlegments: [
-    *Acknowledgements*
+// Put everything in a different scop from the main 
+// text such that the styles apply only to the acknowledgements
+#[
+  #show: styles.preamble
+  #insciption([To twotwo you Too])
+  
+  #outline(title: none, target: figure.where(kind: image))
+  #outline(title: none)
+  
+  = Acknowledgements 
+  Thanks a lot
 
-    Thanks a lot
-
-    TODO: style acknowledgements
-  ],
-)
+  
+  TODO: style acknowledgements
+]
 
 #part[Doctoral College]
 
-= Doctoral College #linebreak() instructions
-The Doctoral Colledge instructions can be found here: #link("https://www.doctorat-bretagne.fr/sites/www.doctorat-bretagne.fr/files/medias/files/CoverThesisInstructions.pdf").
+= Doctoral College  instructions <chap:doctoral_college_instructions>
+The Doctoral College instructions can be found here: #link("https://www.doctorat-bretagne.fr/sites/www.doctorat-bretagne.fr/files/medias/files/CoverThesisInstructions.pdf").
+
+@chap:doctoral_college_instructions @chap:doctoral_college_instructions[rset]
+
 
 == How to setup the front matter
 Instructions on the modifiable parameters of the coverage model provided by the Doctoral College.
@@ -108,9 +108,49 @@ Instructions on the modifiable parameters of the coverage model provided by the 
 - *Keywords in English:* They are used for reporting the thesis in international databases and for OAI harvesting.
 - *The title and address of the unit or laboratory to which it is attached:* If they do not appear on the title page, respecting the forms prescribed by the defence institution
 
-= Using this theme
+= Using this theme <chap:using_theme>
+#set heading(offset: 2)
 Look at the docs #emoji.face.smile
 
+$a +b = c$
+
+= section
+
+== Subsection
+
+=== Paragraph
+sdkjf sdfiijhsdhf 
+
+// #counter(figure.where(kind: image)).update((0,0))
+// Ha #context counter(figure.where(kind: image)).get()
+#figure(
+  image("../common/assets/logos/unirennes-logo.svg"),
+  caption: [Logo de l'Université de Rennes]
+)
+// Hello #context counter(figure.where(kind: image)).get()
+= A other section
+
+#figure(
+  image("../src/assets/matisse.png"),
+  caption: [Logo de l'école doctorale]
+)
+
+#[
+  #show: styles.appendix
+  See the proofs in @apx:proof and more results in @apx:more_results
+  
+  = Appendix
+  this is the appendix
+  == Proofs <apx:proof>
+  == Additional results <apx:more_results>
+]
+
+#set heading(offset: 1)
+= An other chapter
+#figure(
+  image("../common/assets/logos/unirennes-logo.svg"),
+  caption: [Logo de l'université de rennes, encore...]
+)
 
 // Print the matisse back cover
-#back(..info)
+#cover.back(..info)

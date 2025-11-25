@@ -2,16 +2,15 @@
 
 [package]
 name = "unirennes-manuscript"
-version = "0.2.0"
+version = "0.3.0"
 entrypoint = "src/lib.typ"
 authors = ["Thimothé Albouy", "Augustin Godinot <augustin.godinot@inria.fr>"]
 license = "Unlicense"
 description = "Unofficial Typst template to create a thesis manuscript using Université de Rennes and Collège Doctoral de Bretagne charter"
 repository = "https://github.com/grodino/unirennes-manuscript-typst"
-keywords = []
+keywords = ["Université de Rennes"]
 categories = ["thesis"]
 disciplines = []
-# compiler = ""
 exclude = [".github", "docs", "scripts", "tests", ".typstignore", "Justfile"]
 
 [template]
