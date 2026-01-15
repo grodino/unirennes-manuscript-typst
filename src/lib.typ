@@ -1,4 +1,4 @@
-, font, font-size, heading-numbering, prefix-chapter
+#import "utils.typ": balanced-cols, fakesc, font, font-size, heading-numbering, prefix-chapter
 #import "cover.typ" as cover
 #import "styles.typ" as styles
 #import "../common/src/colors.typ" as colors
