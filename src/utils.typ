@@ -21,6 +21,29 @@
   ),
 )
 
+// The colors for the MATISSE doctoral school.
+// TODO: the colors for the other doctoral schools
+#let school-color-recto = blue
+#let school-color-verso = rgb("0054a0")
+
+#let font = (
+  title: "UniRennes",
+  heading: "UniRennes",
+  // The University of Rennes guide also include a serif font (NewsReader) 
+  // but it is too heavy and not easily readable for such a technical text.
+  text: "libertinus serif",
+  math: "New Computer Modern Math",
+  decorated: "UniRennes Inline",
+  cover: "Helvetica",
+)
+#let font-size = (
+  text: 10pt,
+  heading: (
+    display: (title: 28pt, supplement: 48pt),
+    text: (12pt, 10pt)
+  ),
+)
+
 
 // workaround for: https://github.com/typst/typst/issues/466
 #let balanced-cols(n-cols, gutter: 11pt, body) = layout(bounds => context {
@@ -66,6 +89,45 @@
   numbering(style, ..numbers)
 }
 
+
+// Convenience numbering function to allow to display only numbers
+// for section, subsections,... or also include parts.
+// If levels is an int it is interpreted as a slice levels...max_level
+// Else levels must be an array of the levels that will be passed to the numbering function
+#let heading-numbering(..nums, levels: 1, style: "1.") = {
+  let nums = nums.pos()
+  
+  let numbers = if type(levels) == int {
+    nums.slice(calc.min(levels, nums.len()) - 1)
+  } else {
+    let numbers = ()
+    for idx in levels {
+      if nums.len() > idx - 1 {
+        numbers.push(nums.at(idx - 1))
+      }
+    }
+    numbers
+  }
+  
+  numbering(style, ..numbers)
+}
+
+/// Make sure that the chapter number is that of the outlined chapter and not that of the chapter the outline is in.
+#let prefix-chapter(num, location: "here", enclosing: none) = {
+    let heading-counters = counter(heading).get()
+    
+    let numbers = if heading-counters.len() >= 2 {
+      numbering("1.1", heading-counters.at(1), num)
+    } else {
+      numbering("1.1", num)
+    }
+
+    if enclosing == none {
+      return numbers
+    } else {
+      return enclosing.at(0) + numbers + enclosing.at(1)
+    }
+  }
 /// Make sure that the chapter number is that of the outlined chapter and not that of the chapter the outline is in.
 #let prefix-chapter(num, location: "here", enclosing: none) = {
     let heading-counters = counter(heading).get()

@@ -653,6 +653,7 @@
     numbering: none,
   )
   set text(font: font.cover, fill: black)
+  set par.line(numbering: none)
 
   let logo-overhang = (x: 7mm, y: -15mm)
   [#logo-header<cover:logos>]

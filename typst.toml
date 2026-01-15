@@ -1,19 +1,27 @@
-# for a description of available keys, see https://github.com/typst/packages/?tab=readme-ov-file#package-format
-
 [package]
 name = "unirennes-manuscript"
 version = "0.3.0"
 entrypoint = "src/lib.typ"
-authors = ["Thimothé Albouy", "Augustin Godinot <augustin.godinot@inria.fr>"]
+authors = [
+  "Thimothé Albouy",
+  "Augustin Godinot <augustin.godinot@inria.fr>"
+]
 license = "Unlicense"
 description = "Unofficial Typst template to create a thesis manuscript using Université de Rennes and Collège Doctoral de Bretagne charter"
 repository = "https://github.com/grodino/unirennes-manuscript-typst"
-keywords = ["Université de Rennes"]
-categories = ["thesis"]
-disciplines = []
-exclude = [".github", "docs", "scripts", "tests", ".typstignore", "Justfile"]
+keywords = [ ]
+categories = [ "thesis" ]
+disciplines = [ ]
+exclude = [
+  ".github",
+  "docs",
+  "scripts",
+  "tests",
+  ".typstignore",
+  "Justfile"
+]
 
 [template]
 path = "template"
 entrypoint = "main.typ"
-thumbnail = "front-page.png"
+thumbnail = ""

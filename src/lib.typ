@@ -1,8 +1,7 @@
-#import "utils.typ": balanced-cols, fakesc, font, font-size, heading-numbering, prefix-chapter
+, font, font-size, heading-numbering, prefix-chapter
 #import "cover.typ" as cover
 #import "styles.typ" as styles
 #import "../common/src/colors.typ" as colors
-
 
 // Divide the manuscript into parts. The Chapters still use the `= ` syntactic
 // sugar and are numbered independently of parts.

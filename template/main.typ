@@ -1,4 +1,4 @@
-#import "@local/unirennes-manuscript:0.3.0": styles, cover, insciption, part
+#import "@local/unirennes-manuscript:0.3.0": styles, cover, insciption, part, styles, cover, insciption, part
 
 #let info = (
   // Author information
@@ -31,12 +31,10 @@
       ("Prénom NOM", "Fonction et établissement d’exercice"),
       ("Prénom NOM", "Fonction et établissement d’exercice"),
     ), // Co-encadrant.e.s de thèse (dans le cas d'une CIFRE par exemple), peut être vide
-  ),
-  // Thesis defense information
+  ),  // Thesis defense information
   defense-place: [« Lieu »],
   defense-date: [« date »],
-  thesis-number: [« If required »], // Otherwise, remove this line
-  // french info
+  thesis-number: [« If required »], // Otherwise, remove this line  // french info
   title-fr: [« Titre de la thèse »],
   keywords-fr: [de 3 à 6 mots clefs],
   abstract-fr: lorem(150),
@@ -45,7 +43,7 @@
   keywords-en: [3 to 6 keywords],
   abstract-en: lorem(150),
 )
-#show: styles.matisse-thesis.with(author: info.author, title: info.title-en)
+#show: styles.matisse-thesis.with(draft: true)
 
 // Print the matisse cover
 #cover.front(..info)
@@ -62,15 +60,16 @@
   
   = Acknowledgements 
   Thanks a lot
-
   
-  TODO: style acknowledgements
 ]
 
 #part[Doctoral College]
 
-= Doctoral College  instructions <chap:doctoral_college_instructions>
+= Doctoral College instructions <chap:doctoral_college_instructions>
 The Doctoral College instructions can be found here: #link("https://www.doctorat-bretagne.fr/sites/www.doctorat-bretagne.fr/files/medias/files/CoverThesisInstructions.pdf").
+
+@chap:doctoral_college_instructions @chap:doctoral_college_instructions[rset]
+
 
 @chap:doctoral_college_instructions @chap:doctoral_college_instructions[rset]
 
@@ -135,6 +134,34 @@ sdkjf sdfiijhsdhf
   caption: [Logo de l'école doctorale]
 )
 
+= section
+
+== Subsection
+
+=== Paragraph
+sdkjf sdfiijhsdhf 
+
+// #counter(figure.where(kind: image)).update((0,0))
+// Ha #context counter(figure.where(kind: image)).get()
+#figure(
+  image("../common/assets/logos/unirennes-logo.svg"),
+  caption: [Logo de l'Université de Rennes]
+)
+// Hello #context counter(figure.where(kind: image)).get()
+= A other section
+
+#figure(
+  image("../src/assets/matisse.png"),
+  caption: [Logo de l'école doctorale]
+)
+
+
+#set heading(offset: 1)
+= An other chapter
+#figure(
+  image("../common/assets/logos/unirennes-logo.svg"),
+  caption: [Logo de l'université de rennes, encore...]
+)
 #[
   #show: styles.appendix
   See the proofs in @apx:proof and more results in @apx:more_results
@@ -144,13 +171,6 @@ sdkjf sdfiijhsdhf
   == Proofs <apx:proof>
   == Additional results <apx:more_results>
 ]
-
-#set heading(offset: 1)
-= An other chapter
-#figure(
-  image("../common/assets/logos/unirennes-logo.svg"),
-  caption: [Logo de l'université de rennes, encore...]
-)
 
 // Print the matisse back cover
 #cover.back(..info)

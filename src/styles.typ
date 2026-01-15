@@ -14,13 +14,13 @@
 }
 
 /// Style for appendices
-#let appendix(body) = {
+#let appendix(body, root-level: 3) = {
   // The supplement for the sections and subsections is "appendix".
-  show heading.where(level: 3): set heading(supplement: "Appendix")
+  show heading.where(level: root-level): set heading(supplement: "Appendix")
   
   // Subsections are numbered with capital letters, without the section number.
-  show heading.where(level: 4): set heading(
-    numbering: heading-numbering.with(levels: 4, style: "A.1."),
+  show heading.where(level: root-level+1): set heading(
+    numbering: heading-numbering.with(levels: root-level+1, style: "A.1."),
     supplement: "Appendix"
   )
 
