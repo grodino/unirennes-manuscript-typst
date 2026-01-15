@@ -14,7 +14,7 @@
       dir: ltr,
       spacing: 1fr,
       image("assets/matisse.png", width: 90mm),
-      image("../common/assets/logos/unirennes-logo.svg", width: 80mm),
+      image("../common/assets/logos/univ-rennes.svg", width: 80mm),
     ),
   ),
 )
