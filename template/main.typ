@@ -31,7 +31,7 @@
       ("Prénom NOM", "Fonction et établissement d’exercice"),
       ("Prénom NOM", "Fonction et établissement d’exercice"),
     ), // Co-encadrant.e.s de thèse (dans le cas d'une CIFRE par exemple), peut être vide
-  ),  // Thesis defense information
+  ), // Thesis defense information
   defense-place: [« Lieu »],
   defense-date: [« date »],
   thesis-number: [« If required »], // Otherwise, remove this line  // french info
@@ -49,18 +49,18 @@
 #cover.front(..info)
 
 // Print the aknowledgements, list of figures, ...
-// Put everything in a different scop from the main 
+// Put everything in a different scop from the main
 // text such that the styles apply only to the acknowledgements
 #[
   #show: styles.preamble
   #insciption([To twotwo you Too])
-  
+
   #outline(title: none, target: figure.where(kind: image))
   #outline(title: none)
-  
-  = Acknowledgements 
+
+  = Acknowledgements
   Thanks a lot
-  
+
 ]
 
 #part[Doctoral College]
@@ -118,20 +118,20 @@ $a +b = c$
 == Subsection
 
 === Paragraph
-sdkjf sdfiijhsdhf 
+sdkjf sdfiijhsdhf
 
 // #counter(figure.where(kind: image)).update((0,0))
 // Ha #context counter(figure.where(kind: image)).get()
 #figure(
-  image("../common/assets/logos/unirennes-logo.svg"),
-  caption: [Logo de l'Université de Rennes]
+  image("../common/assets/logos/univ-rennes.svg"),
+  caption: [Logo de l'Université de Rennes],
 )
 // Hello #context counter(figure.where(kind: image)).get()
 = A other section
 
 #figure(
   image("../src/assets/matisse.png"),
-  caption: [Logo de l'école doctorale]
+  caption: [Logo de l'école doctorale],
 )
 
 = section
@@ -139,33 +139,33 @@ sdkjf sdfiijhsdhf
 == Subsection
 
 === Paragraph
-sdkjf sdfiijhsdhf 
+sdkjf sdfiijhsdhf
 
 // #counter(figure.where(kind: image)).update((0,0))
 // Ha #context counter(figure.where(kind: image)).get()
 #figure(
-  image("../common/assets/logos/unirennes-logo.svg"),
-  caption: [Logo de l'Université de Rennes]
+  image("../common/assets/logos/univ-rennes.svg"),
+  caption: [Logo de l'Université de Rennes],
 )
 // Hello #context counter(figure.where(kind: image)).get()
 = A other section
 
 #figure(
   image("../src/assets/matisse.png"),
-  caption: [Logo de l'école doctorale]
+  caption: [Logo de l'école doctorale],
 )
 
 
 #set heading(offset: 1)
 = An other chapter
 #figure(
-  image("../common/assets/logos/unirennes-logo.svg"),
-  caption: [Logo de l'université de rennes, encore...]
+  image("../common/assets/logos/univ-rennes.svg"),
+  caption: [Logo de l'université de rennes, encore...],
 )
 #[
   #show: styles.appendix
   See the proofs in @apx:proof and more results in @apx:more_results
-  
+
   = Appendix
   this is the appendix
   == Proofs <apx:proof>
