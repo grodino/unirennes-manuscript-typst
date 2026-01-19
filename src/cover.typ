@@ -677,14 +677,15 @@
   v(2.25cm)
 
   // Add a blue background with the width of the page
-  let blue-bg-overhang = 1cm
+  let blue-bg-overhang = 1.5cm
   context {
     let y-start = (
       measure(query(<cover:bg-image>).first()).height
         + locate(<cover:thesis-text>).position().y
         + measure(query(<cover:logos>).first()).height
-        - 12pt
+        +38pt
     )
+    // let y-start = locate(<cover:bg-image>).position().y + measure(query(<cover:bg-image>).first()).height
     let y-end = locate(<cover:defense-info>).position().y - cover-page-margins.top - blue-bg-overhang / 2
 
     place(
@@ -701,6 +702,7 @@
 
 
   set text(fill: white)
+  v(.5cm)
   text(size: 14pt, weight: "bold", fakesc[l'Université de Rennes])
   v(.01cm)
   text(size: 11pt)[
@@ -718,9 +720,9 @@
   
   // Title + defense info block
   text(size: 16pt)[*#title-en* <cover:title-en>]
-  parbreak()
+  v(.5em)
   text(size: 14pt, title-fr)
-  parbreak()
+  v(.5em)
 
   text(size: 11pt)[
     *Thèse présentée et soutenue à #defense-place, le #defense-date* \
@@ -735,29 +737,31 @@
   [#block(
       inset: (left: 16pt),
       {
-        set text(fill: black, size: 10pt)
+        set text(fill: rgb("595959"), size: 10pt)
 
-        text(size: 12pt, weight: "bold")[Rapporteur·trice·s avant soutenance : ]
+        text(size: 12pt, weight: "bold", fill: black)[Rapporteur·trice·s avant soutenance : ]
+        v(-10pt)
         table(
           columns: 2,
           stroke: none,
           column-gutter: 20pt,
-          inset: (x: 0pt, y: 2pt),
+          inset: (x: 0pt, y: 3pt),
           ..for (name, affiliation) in jury.at("rapporteurs") { (name, affiliation) }
         )
 
-        text(size: 12pt, weight: "bold")[Composition du Jury : ]
+        text(size: 12pt, weight: "bold", fill: black)[Composition du Jury : ]
+        v(-10pt)
         table(
           columns: 3,
           stroke: none,
           column-gutter: (10pt, 50pt),
-          inset: (x: 0pt, y: 2pt),
+          inset: (x: 0pt, y: 3pt),
           [Président·e :], ..jury.at("president"),
           [Examinateur·ice·s :], ..jury.at("examinateurs").first(),
           ..for (name, affiliation) in jury.at("examinateurs").slice(1) { ("", name, affiliation) },
-          [Direction :], ..supervision.at("directeurs").first(),
+          [Direction :], ..(supervision.at("directeurs")).first(),
           ..for (name, affiliation) in supervision.at("directeurs").slice(1) { ("", name, affiliation) },
-          ..if "encadrants" in supervision {
+          ..if "encadrants" in supervision and supervision.encadrants.len() > 0{
             (
               [Encadrement :],
               ..supervision.at("encadrants").first(),
@@ -767,12 +771,13 @@
         )
 
         if "invites" in jury {
-          text(size: 12pt, weight: "bold")[Invité·e·s : ]
+          text(size: 12pt, weight: "bold", fill: black)[Invité·e·s : ]
+          v(-10pt)
           table(
             columns: 2,
             stroke: none,
             column-gutter: 20pt,
-            inset: (x: 0pt, y: 2pt),
+            inset: (x: 0pt, y: 3pt),
             ..for (name, affiliation) in jury.at("invites") { (name, affiliation) }
           )
         }
@@ -810,7 +815,7 @@
   // Set the page background
   set page(background: image("assets/abstracts-bg.svg"))
 
-  set text(font: "TeX Gyre Heros", fill: black)
+  set text(font: "TeX Gyre Heros", fill: black, size: 11pt)
 
   [#logo-header<cover:logos>]
   v(2cm)
@@ -829,7 +834,7 @@
 
   balanced-cols(2, gutter: 11pt)[*Résumé :* #abstract-fr]
 
-  v(1cm)
+  v(.5cm)
   line(length: 100%, stroke: .2cm + school-color-verso)
   v(.4cm)
 

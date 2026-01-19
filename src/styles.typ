@@ -265,34 +265,35 @@
   // ------------ REFERENCES ------------ //
   show ref: it => {
     let el = it.element
-
+  
     if el == none { return it }
-
+  
     // Remove the trailing point at the end of parts, chapters and sections when referencing them.
     // Example: Chapter 1 instead of Chapter 1.
     if el.func() == heading {
-      let supplement = if it.supplement == auto {el.supplement} else {it.supplement}
-
+      let supplement = if it.supplement == auto { el.supplement } else { it.supplement }
+  
       // Get the chapter number and the appendix number
       let number = if supplement == [Appendix] {
         heading-numbering(
           ..counter(el.func()).at(el.location()),
-          style: "1.A.1",
-          levels: (2, 4)
+          style: "A.1",
+          levels: 3,
         )
       } else {
         heading-numbering(
           ..counter(el.func()).at(el.location()),
           style: "1.1",
-          levels: 2
+          levels: 2,
         )
       }
-      
+  
       return link(el.location(), [#supplement #number])
     }
-
+  
     return it
   }
+
 
   // --------- BLOCKQUOTES ----------- //
   show quote.where(block: true): it => {
