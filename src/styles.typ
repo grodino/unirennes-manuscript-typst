@@ -1,6 +1,7 @@
 #import "@preview/hydra:0.6.1": hydra
 
-#import "utils.typ": balanced-cols, fakesc, font, font-size, heading-numbering, prefix-chapter
+#import "utils.typ": balanced-cols, fakesc, font as default-fonts, font-size as default-font-sizes, heading-numbering, prefix-chapter, add-dicts
+
 
 /// Styles for the acknowlegments, abstract and table of content/figures/... 
 /// To be applied right before the preamble (but after the cover)
@@ -14,9 +15,12 @@
 }
 
 /// Style for appendices
-#let appendix(body, root-level: 3) = {
+/// - root-level: the level of the "Appendix" heading.
+///   Important if we want the appendix to be a part instead of a chapter
+#let appendix(body, root-level: 2) = {
   // The supplement for the sections and subsections is "appendix".
-  show heading.where(level: root-level): set heading(supplement: "Appendix")
+  // Pause the numbering for the "Appendix" heading (to avoid affecting chapters or parts numbers)
+  show heading.where(level: root-level): set heading(supplement: "Appendix", numbering: none)
   
   // Subsections are numbered with capital letters, without the section number.
   show heading.where(level: root-level+1): set heading(
@@ -24,31 +28,55 @@
     supplement: "Appendix"
   )
 
+  // Size the heading couter is frozen, we need to update the section/subsections/... counters ourselves
+  counter(heading).update((..levels) => 
+    levels.pos().enumerate(start: 1).map(((idx, level)) => 
+      if idx > root-level { 0 } else { level }
+    )
+  )
+  
   body
 }
 
 /// General styles for the template. To be applided at the beginning of the document.
 #let matisse-thesis(
-  author: "",
-  title: "",
-  body-paper: "a4",
+  author: none,
+  title: none,
+  date: none,
+  keywords: (),
+  description: none,
+  paper: "a4",
   draft: false,
-  font-size: font-size,
-  font: font,
+  update-font-sizes: (:),
+  update-fonts: (:),
+  margin: (outside: 15mm, inside: 20mm, top: 20mm, bottom: 15mm),
   body,
 ) = {
+  // Validate arguments
+  assert(author != none, message: "You must provide an author") 
+  assert(title != none, message: "You must provide a title") 
+  
+  // Merge font settings with defaults
+  let font =  add-dicts(default-fonts, update-fonts)
+  let font-size = add-dicts(default-font-sizes, update-font-sizes)
+
+  
+  
   //////////////////////////////////////////////////////////////////////////////
   /// GENERAL SETTINGS
   set document(
     author: author,
     title: title,
+    date: if date != none { date } else { datetime.today() },
+    keywords: keywords,
+    description: description
   )
 
 
   set page(
-    body-paper,
+    paper: paper,
     // ------------ MARGINS ------------ //
-    margin: (outside: 15mm, inside: 20mm, top: 20mm, bottom: 15mm),
+    margin: margin,
 
     // ------------ PAGE NUMBERS ------------ //
     numbering: "1",
@@ -217,6 +245,9 @@
     align(left, it),
   )
 
+  // ------------- TABLES ------------- //
+  show table.cell: set par(justify: false)
+
   // ------------ OUTLINE ------------ //
   // Parts and Chapters should have the same indentation level on outline
   set outline(indent: n => {
@@ -229,6 +260,7 @@
   
   // Style the outline entries
   show outline.entry: e => if e.element.func() == heading {
+    show footnote.entry: none
     if e.level == 1 {
       v(5mm, weak: true)
       strong(e)
@@ -293,6 +325,13 @@
   
     return it
   }
+  
+  // Color clickable parts
+  show link: set text(fill: rgb("#004070"))
+  show cite: it => if it.form == "normal" {
+    set text(fill: rgb("#004070"))
+    it
+  } else { it }
 
 
   // --------- BLOCKQUOTES ----------- //
@@ -303,9 +342,19 @@
   }
 
 
+  // ----------- LISTS ------------- //
+  set list(indent: 1em)
+  set enum(indent: 1em)
+
 
   // ------------ BIBLIOGRAPHY ------------ //
   set bibliography(style: "association-for-computing-machinery")
+  show bibliography: it => {
+    show heading: set heading(numbering: none)
+    pagebreak(weak: true)
+    
+    it
+  }
 
   // ------------ BODY ------------ //
   body

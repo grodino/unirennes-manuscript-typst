@@ -673,8 +673,9 @@
     )
   }
 
+  v(1cm)
   text(size: 26pt, fakesc[Thèse de doctorat de<cover:thesis-text>])
-  v(2.25cm)
+  v(1.25cm)
 
   // Add a blue background with the width of the page
   let blue-bg-overhang = 1.5cm
@@ -683,7 +684,7 @@
       measure(query(<cover:bg-image>).first()).height
         + locate(<cover:thesis-text>).position().y
         + measure(query(<cover:logos>).first()).height
-        +38pt
+        +18pt
     )
     // let y-start = locate(<cover:bg-image>).position().y + measure(query(<cover:bg-image>).first()).height
     let y-end = locate(<cover:defense-info>).position().y - cover-page-margins.top - blue-bg-overhang / 2

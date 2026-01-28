@@ -1,4 +1,4 @@
-#import "@local/unirennes-manuscript:0.3.0": styles, cover, insciption, part, styles, cover, insciption, part
+#import "@local/unirennes-manuscript:0.3.1": styles, cover, insciption, part, styles, cover, insciption, part
 
 #let info = (
   // Author information
@@ -43,7 +43,11 @@
   keywords-en: [3 to 6 keywords],
   abstract-en: lorem(150),
 )
-#show: styles.matisse-thesis.with(draft: true)
+#show: styles.matisse-thesis.with(
+  draft: true, 
+  author: info.author, 
+  title:info.title-en
+)
 
 // Print the matisse cover
 #cover.front(..info)
@@ -67,11 +71,6 @@
 
 = Doctoral College instructions <chap:doctoral_college_instructions>
 The Doctoral College instructions can be found here: #link("https://www.doctorat-bretagne.fr/sites/www.doctorat-bretagne.fr/files/medias/files/CoverThesisInstructions.pdf").
-
-@chap:doctoral_college_instructions @chap:doctoral_college_instructions[rset]
-
-
-@chap:doctoral_college_instructions @chap:doctoral_college_instructions[rset]
 
 
 == How to setup the front matter
